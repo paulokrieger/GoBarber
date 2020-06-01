@@ -12,11 +12,17 @@ import { Container, Error } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  containerStyle?: object;
   icon?: React.ComponentType<IconBaseProps>; // receber um componente como propriedade, passando as propriedades dos ícones
 }
 // recebe todas as props do input e passando para ele
 // linha 14: se houver ícone
-const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  name,
+  containerStyle = {},
+  icon: Icon,
+  ...rest
+}) => {
   // se acessar inputref agora, vai ter acesso ao elemento desse input na DOM,
   // manipular de forma direta, botar focus, .value .. como se tivesse JS tradicional
   // ou jquery para fazer uma manipulacao direta a algum elemento
@@ -56,7 +62,12 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
     });
   }, [fieldName, registerField]);
   return (
-    <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
+    <Container
+      style={containerStyle}
+      isErrored={!!error}
+      isFilled={isFilled}
+      isFocused={isFocused}
+    >
       {Icon && <Icon size={20} />}
       <input
         onFocus={handleInputFocus}
